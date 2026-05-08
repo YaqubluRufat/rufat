@@ -1,0 +1,7 @@
+package com.example.demo.Exception;
+
+public class OrderItemNotFound extends RuntimeException {
+    public OrderItemNotFound(String message) {
+        super(message);
+    }
+}

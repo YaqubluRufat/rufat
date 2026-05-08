@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 
 import java.util.List;
 
@@ -13,27 +14,20 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+
+public class User extends BaseEntity {
+
     private String username;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserProfile userProfile;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<UserProduct>userProducts;
-
+    @OneToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
+    @OneToMany(mappedBy = "user")
+    private List<Order> order;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> review;
 
 
 }

@@ -1,45 +1,36 @@
 package com.example.demo.Security;
 
-import com.example.demo.DTO.LoginDto;
-import com.example.demo.Exception.UserNotFoundException;
+import com.example.demo.Dto.LoginDto;
+import com.example.demo.Dto.RefreshTokenDtoIMPL;
+import com.example.demo.Dto.RegisterDto;
+import com.example.demo.Dto.Tokens;
+import com.example.demo.Entity.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
+@RequestMapping
 public class LoginController {
-    private final MyUserDetailsService myUserDetailsService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    public LoginController(MyUserDetailsService myUserDetailsService, PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.myUserDetailsService = myUserDetailsService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
+    private final LoginService loginService;
+
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+
     }
-
     @PostMapping("/login")
-    public ResponseEntity<?>login (@RequestBody LoginDto loginDto){
-        try{
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDto.getUsername());
-            boolean matches = passwordEncoder.matches(loginDto.getPassword(), userDetails.getPassword());
-
-            if(matches){
-                String token = jwtService.generateToken(userDetails);
-                return ResponseEntity.ok(token);
-
-            }else {
-                return ResponseEntity.ok("Sifre yalnisdir");
-
-            }
-        }catch (UserNotFoundException ex){
-            return ResponseEntity.ok("User not found");
-        }
-
-
+    public ResponseEntity<?>login(@RequestBody LoginDto loginDto){
+        Tokens login = loginService.login(loginDto);
+        return ResponseEntity.ok(login);
     }
+    @PostMapping("/register")
+    public ResponseEntity<?>register(@RequestBody RegisterDto registerDto){
+        User register = loginService.register(registerDto);
+        return ResponseEntity.ok(register);
+    }
+
 }
