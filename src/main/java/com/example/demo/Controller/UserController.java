@@ -24,10 +24,8 @@ public class UserController {
         UserDtoIMPL byId = userService.findById(id);
         return ResponseEntity.ok(byId);
     }
-    @GetMapping("/11")
-    public String test(){
-         return userService.test();
-    }
+
+
     @GetMapping("/find")
     public ResponseEntity<UserDtoIMPL>findMyUser(
             Authentication authentication){

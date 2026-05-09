@@ -31,7 +31,7 @@ public class Config {
                                 .requestMatchers("/actuator/health").permitAll()
                                 .requestMatchers("/register").permitAll()
                                 .requestMatchers("/out").permitAll()
-                                .requestMatchers("/user/11").permitAll()
+
 
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(
