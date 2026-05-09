@@ -15,14 +15,18 @@ public class Ascept {
     public Object logAround (ProceedingJoinPoint pjg) throws Throwable{
 
         String name = pjg.getSignature().getName();
-        log.info("BEFORE -> Method: {}",name);
+        Object[] args = pjg.getArgs();
+        log.info("BEFORE -> Method: {}, Args: {}",name,args);
+        long start = System.currentTimeMillis();
         try {
             Object result = pjg.proceed();
-            log.info("AFTER RETURNING -> Method: {}, Result: {}",name,result);
+            long time = System.currentTimeMillis() - start;
+            log.info("AFTER RETURNING -> Method: {}, Result: {}, times: {}",name,result,time);
             return result;
         }catch (Exception ex){
-            log.info("AFTER THROWING -> Method: {}, Error: {}",name,ex.getMessage());
-            return ex;
+            long time = System.currentTimeMillis() - start;
+            log.info("AFTER THROWING -> Method: {}, Error: {}, time: {}",name,ex.getMessage(),time);
+            throw  ex;
         }finally {
             log.info("AFTER -> Method: {}",name);
 
