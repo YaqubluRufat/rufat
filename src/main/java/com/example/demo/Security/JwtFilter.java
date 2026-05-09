@@ -41,6 +41,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String redisKey = "BL_" + token;
 
+
+
+
         if (Boolean.TRUE.equals(redisTemplate.hasKey(redisKey))) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Token is blocked");

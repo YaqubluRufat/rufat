@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class Ascept {
 
-    @Around("execution(* com.example.demo..*(..))")
+    @Around("execution(* com.example.demo.Service..*(..))")
     public Object logAround (ProceedingJoinPoint pjg) throws Throwable{
+
         String name = pjg.getSignature().getName();
         log.info("BEFORE -> Method: {}",name);
         try {

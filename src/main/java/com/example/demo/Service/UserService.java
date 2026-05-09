@@ -40,6 +40,10 @@ public class UserService {
         return userMapper.toUserDtoIMPL(user);
     }
 
+    public String test(){
+        return "salam";
+    }
+
     @PreAuthorize("hasRole('USER')")
     public UserDtoIMPL findMyUser(Authentication authentication) {
         String username = authentication.getName();
