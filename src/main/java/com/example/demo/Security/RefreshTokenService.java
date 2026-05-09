@@ -32,17 +32,10 @@ public class RefreshTokenService {
         refreshTokenRepository.findByToken(dto.getRefreshToken())
                 .ifPresent(refreshTokenRepository::delete);
 
-        String accessToken = dto.getAccessToken().trim();
-
-
+        String accessToken = dto.getAccessToken();
 
         String redisKey = "BL_" + accessToken;
-
-        redisTemplate.opsForValue().set(
-                redisKey,
-                "logout",
-                Duration.ofMinutes(15)
-        );
+        redisTemplate.opsForValue().set(redisKey,"logout",Duration.ofMinutes(15));
     }
 }
 
