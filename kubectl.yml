@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: demo-app
+          image: yaqublurufat/demo-app:latest
           ports:
             - containerPort: 8088
 
