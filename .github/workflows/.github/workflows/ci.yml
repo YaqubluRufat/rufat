@@ -1,0 +1,15 @@
+name: Test CI
+
+on:
+  push:
+    branches: ["rufat"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run test
+        run: echo "Qaqa Actions işlədi 🔥"
