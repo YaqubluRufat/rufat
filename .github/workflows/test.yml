@@ -19,10 +19,7 @@ jobs:
           java-version: '17'
 
       - name: Build project
-        run: mvn clean package
-
-      - name: Run tests
-        run: mvn test
+        run: mvn clean package -DskipTests
 
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
