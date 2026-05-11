@@ -9,8 +9,9 @@ spec:
 
   strategy:
     type: RollingUpdate
-    maxSurge: 1
-    maxUnavailable: 1
+    rollingUpdate:
+     maxSurge: 1
+     maxUnavailable: 1
 
   selector:
     matchLabels:
@@ -24,7 +25,8 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: yaqublurufat/demo-app:latest
+          image: yaqublurufat/demo-app:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8088
 
@@ -35,3 +37,17 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-service
+spec:
+  selector:
+    app: demo-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  type: ClusterIP
