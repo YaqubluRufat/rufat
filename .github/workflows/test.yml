@@ -24,7 +24,7 @@ jobs:
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
-      - name: Build Docker image (versioned)
+      - name: Build Docker image
         run: |
           docker build -t yaqublurufat/demo-app:v${{ github.run_number }} .
 
@@ -37,18 +37,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
 
       - name: Configure kubeconfig
         run: |
           mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
 
-      - name: Deploy to Kubernetes
+      - name: Test cluster connection
+        run: |
+          kubectl config current-context
+          kubectl get nodes
+
+      - name: Deploy new image
         run: |
           kubectl set image deployment/demo-app \
           demo-app=yaqublurufat/demo-app:v${{ github.run_number }}
