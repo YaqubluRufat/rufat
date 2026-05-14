@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-green
+  labels:
+    app: demo-app
+    version: green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-app
+      version: green
+
+  template:
+    metadata:
+      labels:
+        app: demo-app
+        version: green
+
+    spec:
+      containers:
+        - name: demo-app
+          image: yaqublurufat/demo-app:v2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8088
+
+          resources:
+            requests:
+              memory: "216Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+

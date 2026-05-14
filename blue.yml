@@ -1,26 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-app
+  name: demo-app-blue
   labels:
     app: demo-app
+    version: blue
 spec:
   replicas: 3
 
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-     maxSurge: 1
-     maxUnavailable: 1
+
 
   selector:
     matchLabels:
       app: demo-app
+      version: blue
 
   template:
     metadata:
       labels:
         app: demo-app
+        version: blue
 
     spec:
       containers:
@@ -38,14 +37,3 @@ spec:
               memory: "512Mi"
               cpu: "500m"
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: demo-app-service
-spec:
-  selector:
-    app: demo-app
-  ports:
-    - port: 80
-      targetPort: 8088
