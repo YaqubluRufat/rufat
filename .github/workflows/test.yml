@@ -18,6 +18,9 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Syntax Check (Compile)
+        run: mvn compile
+
       - name: Build project
         run: mvn clean package -DskipTests
 
