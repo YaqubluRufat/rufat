@@ -21,6 +21,9 @@ jobs:
       - name: Syntax Check (Compile)
         run: mvn compile
 
+      - name: Lint (Checkstyle)
+        run: mvn checkstyle:check
+
       - name: Build project
         run: mvn clean package -DskipTests
 
