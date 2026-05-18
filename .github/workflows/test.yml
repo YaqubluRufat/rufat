@@ -22,13 +22,13 @@ jobs:
         run: mvn compile
 
       - name: Static Analysis
-        run: mvn sonar:sonar -Dsonar.projectKey=rufat -Dsonar.organization=yaqublurufa -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn sonar:sonar -Dsonar.projectKey=rufat -Dsonar.organization=yaqublurufat -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Build project
         run: mvn clean package -DskipTests
 
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USE }}" --password-stdin
 
       - name: Build Docker image
         run: |
