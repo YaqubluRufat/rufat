@@ -21,6 +21,10 @@ jobs:
       - name: Syntax Check (Compile)
         run: mvn compile
 
+      - name: Static Analysis
+        run: mvn sonar:sonar -Dsonar.projectKey=rufat -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+
       - name: Build project
         run: mvn clean package -DskipTests
 
