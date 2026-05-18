@@ -28,7 +28,7 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USE }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
       - name: Build Docker image
         run: |
