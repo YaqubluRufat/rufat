@@ -18,6 +18,9 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Run Unit Tests
+        run: mvn test
+
       - name: Syntax Check (Compile)
         run: mvn compile
 
