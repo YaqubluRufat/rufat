@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "menuItems")
 public class MenuItem extends BaseEntity{
     private String name;
     private BigDecimal price;

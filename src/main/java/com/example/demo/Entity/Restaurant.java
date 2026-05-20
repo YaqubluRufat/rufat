@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "restaurant")
 public class Restaurant extends BaseEntity {
     private String name;
     private String location;
