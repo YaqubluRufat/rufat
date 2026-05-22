@@ -7,23 +7,19 @@ metadata:
     version: blue
 spec:
   replicas: 3
-
   selector:
     matchLabels:
       app: demo-app
       version: blue
-
   template:
     metadata:
       labels:
         app: demo-app
         version: blue
-
     spec:
       containers:
         - name: demo-app
           image: yaqublurufat/demo-app:v3
-          imagePullPolicy: Always
           ports:
             - containerPort: 8088
 
@@ -34,4 +30,5 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+
 
