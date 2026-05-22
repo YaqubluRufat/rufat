@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: demo-app
-          image: yaqublurufat/demo-app:v1
+          image: yaqublurufat/demo-app:v3
           imagePullPolicy: Always
           ports:
             - containerPort: 8088

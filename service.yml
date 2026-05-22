@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: demo-app
-    version: green
+    version: blue
 
   ports:
     - port: 80
