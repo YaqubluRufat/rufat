@@ -1,49 +1,62 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DTO.ProductDto;
-import com.example.demo.DTO.ProductDtoIMPL;
+import com.example.demo.Dto.MarketDtoIMPL;
+import com.example.demo.Dto.ProductDtoIMPL;
+import com.example.demo.Dto.ProductsDto;
 import com.example.demo.Service.ProductService;
-import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import jdk.dynalink.linker.LinkerServices;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api3")
-
+@RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+
     @PostMapping("/save")
-    public ResponseEntity<ProductDtoIMPL>addProduct(@RequestBody@Valid ProductDto productDto){
-        ProductDtoIMPL productDtoIMPL = productService.addProduct(productDto);
-        return ResponseEntity.ok().body(productDtoIMPL);
+    public ResponseEntity<ProductDtoIMPL> addProduct(@RequestBody ProductsDto productsDto) {
+        ProductDtoIMPL productDtoIMPL = productService.addProduct(productsDto);
+        return ResponseEntity.ok(productDtoIMPL);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<ProductDtoIMPL> findById(@PathVariable Long id) {
+        ProductDtoIMPL byId = productService.findById(id);
+        return ResponseEntity.ok(byId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBYId(@PathVariable Long id) {
+        productService.deleteById(id);
+        return ResponseEntity.ok("Deleted");
 
     }
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/find/{id}")
-    public ResponseEntity<ProductDtoIMPL>findById(@PathVariable Long id){
-        ProductDtoIMPL byId = productService.findById(id);
-        return ResponseEntity.ok().body(byId);
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ProductDtoIMPL> updateProduct(@PathVariable Long id, @RequestBody ProductsDto productsDto) {
+        ProductDtoIMPL productDtoIMPL = productService.updateProduct(id, productsDto);
+        return ResponseEntity.ok(productDtoIMPL);
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>deleteById(@PathVariable Long id){
-        productService.deleteById(id);
-        return ResponseEntity.ok().body("Deleted successfully");
+
+    @GetMapping("/find")
+    public ResponseEntity<List<ProductDtoIMPL>> findByName(@RequestParam String name) {
+        List<ProductDtoIMPL> byName = productService.findByName(name);
+        return ResponseEntity.ok(byName);
     }
     @GetMapping("/list")
-    public ResponseEntity<List<ProductDtoIMPL>>getAll(){
-        List<ProductDtoIMPL> all = productService.getAll();
-        return ResponseEntity.ok().body(all);
+    public ResponseEntity<Page<ProductDtoIMPL>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        Page<ProductDtoIMPL> all = productService.getAll(page, size, sortBy, sortDir);
+        return ResponseEntity.ok(all);
     }
-
-
 
 }

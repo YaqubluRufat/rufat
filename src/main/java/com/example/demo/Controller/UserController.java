@@ -1,14 +1,9 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DTO.UserDto;
-import com.example.demo.DTO.UserDtoIMPL;
-import com.example.demo.Mapper.UserMapper;
+import com.example.demo.Dto.UserDtoIMPL;
 import com.example.demo.Service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,9 +13,16 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping("/save")
-    public ResponseEntity<UserDtoIMPL>addUser(@RequestBody UserDto userDto){
-        UserDtoIMPL userDtoIMPL = userService.addUser(userDto);
-        return ResponseEntity.ok().body(userDtoIMPL);
+    @GetMapping("/find/{id}")
+    public ResponseEntity<UserDtoIMPL> findById(@PathVariable Long id){
+        UserDtoIMPL byId = userService.findById(id);
+        return ResponseEntity.ok(byId);
+
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User is enabled");
+    }
+
 }

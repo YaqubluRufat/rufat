@@ -1,25 +1,19 @@
 package com.example.demo.Security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
-@EnableWebSecurity
 @EnableMethodSecurity
+@EnableWebSecurity
+@Configuration
 public class Config {
     private final JwtFilter jwtFilter;
 
@@ -27,26 +21,27 @@ public class Config {
         this.jwtFilter = jwtFilter;
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+         return httpSecurity.csrf(csrf->csrf.disable())
+                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
-        return httpSecurity.csrf(csrf -> csrf.disable()).
-                addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).
+                .authorizeHttpRequests(a->a.requestMatchers("/login").permitAll().
+                                requestMatchers("/register").permitAll().
+                                requestMatchers("/market/find/**").permitAll()
+                                .requestMatchers("/product/find/**").permitAll()
+                                .requestMatchers("product/find").permitAll().
 
-                authorizeHttpRequests(
-                a->a.requestMatchers(HttpMethod.GET
-                        ,"/api3/find/**").hasRole("ADMIN")
-                .anyRequest().permitAll())
-                .sessionManagement(session -> session.sessionCreationPolicy(
+                                anyRequest().authenticated()
+                        )
+                .sessionManagement(
+                        session->session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS
                 )).build();
     }
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
 
 }
