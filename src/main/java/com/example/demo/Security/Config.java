@@ -30,7 +30,9 @@ public class Config {
                                 requestMatchers("/register").permitAll().
                                 requestMatchers("/market/find/**").permitAll()
                                 .requestMatchers("/product/find/**").permitAll()
-                                .requestMatchers("product/find").permitAll().
+                                .requestMatchers("product/find").permitAll()
+                                .requestMatchers("department/find/**").permitAll()
+                                .requestMatchers("/out").permitAll().
 
                                 anyRequest().authenticated()
                         )

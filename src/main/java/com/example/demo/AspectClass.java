@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Aspect
 public class AspectClass {
 
-    @Around("execution(* com.example.demo..*(..))")
+    @Around("execution(* com.example.demo.Service..*(..))")
     public Object logAround(ProceedingJoinPoint pjg)throws Throwable {
         String name = pjg.getSignature().getName();
         Object[] args = pjg.getArgs();
@@ -20,7 +20,7 @@ public class AspectClass {
         try {
             Object result = pjg.proceed();
             long time = System.currentTimeMillis() - start;
-            log.info("AFTER RETURNING: Method: {},Result: {},Args: {},Time: {}", name, result,args, time);
+            log.info("AFTER : Method: {},Result: {},Args: {},Time: {}", name, result,args, time);
             return result;
         } catch (Exception ex) {
             long time = System.currentTimeMillis() - start;

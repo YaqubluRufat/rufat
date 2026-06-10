@@ -1,24 +1,19 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: messigoat10
-    ports:
-      - "5432:5432"
+      ZOOKEEPER_CLIENT_PORT: 2181
 
-  app:
-    build: .
-    container_name: spring-app
-    ports:
-      - "8087:8087"
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
     depends_on:
-      - postgres
+      - zookeeper
+    ports:
+      - "9092:9092"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=messigoat10
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1

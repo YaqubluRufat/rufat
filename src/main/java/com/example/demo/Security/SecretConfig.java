@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.crypto.SecretKey;
+import java.security.Key;
 
 @Configuration
 public class SecretConfig {
     @Value("${JWT_SECRET}")
-    private String secret;
+    private  String secret;
     @Bean
-    public SecretKey key() {
+    public SecretKey key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 }

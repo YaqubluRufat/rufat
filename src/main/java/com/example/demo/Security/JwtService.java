@@ -1,5 +1,6 @@
 package com.example.demo.Security;
 
+import com.example.demo.Entity.User;
 import com.example.demo.Repository.RefreshRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class JwtService {
 
     public String generateToken(UserDetails userDetails) {
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+
 
         return Jwts.builder()
                 .subject(userDetails.getUsername())

@@ -15,8 +15,7 @@ import java.util.Optional;
 public interface MarketRepository extends JpaRepository<Market,Long> {
 
     boolean existsByIdAndUserId(Long marketId,Long userId);
-    @Query("SELECT m FROM Market m LEFT JOIN FETCH m.products  WHERE m.id= :id")
+    @Query("SELECT m FROM Market m   WHERE m.id= :id")
     Optional<Market>findMarketById(@Param("id") Long id);
-
 
 }

@@ -140,6 +140,15 @@ public class GlobalException {
         errorResponseDto.setStatusCode(HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(DepartmentNotFound.class)
+    public ResponseEntity<?> error(DepartmentNotFound ex, ServletWebRequest servletWebRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setPath(servletWebRequest.getRequest().getRequestURL().toString());
+        errorResponseDto.setMessage(ex.getMessage());
+        errorResponseDto.setTimeStamp(LocalDateTime.now());
+        errorResponseDto.setStatusCode(HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(ProductNotFound.class)
     public ResponseEntity<?> error(ProductNotFound ex, ServletWebRequest servletWebRequest) {
         ErrorResponseDto errorResponseDto = new ErrorResponseDto();
@@ -149,4 +158,15 @@ public class GlobalException {
         errorResponseDto.setStatusCode(HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(RefreshTokenNotFoundException.class)
+    public ResponseEntity<?> error(RefreshTokenNotFoundException ex, ServletWebRequest servletWebRequest) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setPath(servletWebRequest.getRequest().getRequestURL().toString());
+        errorResponseDto.setMessage(ex.getMessage());
+        errorResponseDto.setTimeStamp(LocalDateTime.now());
+        errorResponseDto.setStatusCode(HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+
 }

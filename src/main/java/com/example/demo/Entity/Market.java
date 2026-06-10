@@ -23,5 +23,8 @@ public class Market extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "market",cascade = CascadeType.ALL)
-    private List<Products> products;
+    private List<Department> department;
+    @Version
+    private Long version;
+
 }

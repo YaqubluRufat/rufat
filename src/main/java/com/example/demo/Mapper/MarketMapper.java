@@ -5,7 +5,7 @@ import com.example.demo.Dto.MarketDtoIMPL;
 import com.example.demo.Entity.Market;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring",uses = {ProductMapper.class})
+@Mapper(componentModel = "spring",uses = {DepartmentMapper.class})
 public interface MarketMapper {
 
     Market toMarket(MarketDto marketDto);
