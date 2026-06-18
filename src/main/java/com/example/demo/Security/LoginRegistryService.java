@@ -95,8 +95,8 @@ public class LoginRegistryService {
 
     public String token(TokenDto tokenDto) {
 
-        String username = jwtService.extractByUsername(tokenDto.getRefreshToken());
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
+
+        UserDetails userDetails = myUserDetailsService.loadUserByUsername(tokenDto.getRefreshToken());
         if (jwtService.validation(tokenDto.getRefreshToken(), userDetails)) {
             String generateToken = jwtService.generateToken(userDetails);
             return generateToken;

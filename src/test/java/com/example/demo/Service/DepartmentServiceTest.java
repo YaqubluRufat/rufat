@@ -91,17 +91,15 @@ class DepartmentServiceTest {
     void deleteById() {
         Department department = new Department();
         department.setId(1L);
-        department.setName("Rufat");
-
 
         when(departmentRepository.findDepartmentById(1L)).thenReturn(Optional.of(department));
-        doNothing().when(departmentProducerEvent)
-                .publishDepartmentDeleteEvent(any(DepartmentDeletedEvent.class));
-
+        doNothing().when(departmentProducerEvent).publishDepartmentDeleteEvent(any(DepartmentDeletedEvent.class));
 
         departmentService.deleteById(1L);
 
         verify(departmentRepository).findDepartmentById(1L);
+
+
 
     }
 

@@ -15,11 +15,12 @@ public class BlacklistService {
         this.redisTemplate = redisTemplate;
     }
 
-   public void blackList(String token,Date expiration){
-       long time = expiration.getTime();
-       redisTemplate.opsForValue().set(token,"blacklist",time,TimeUnit.MILLISECONDS);
-   }
-   public boolean isBlacklisted(String token){
-        return Boolean.TRUE.equals(redisTemplate.hasKey(token));
-   }
+    public void blackList(String token,Date expiration){
+        long time = expiration.getTime();
+        redisTemplate.opsForValue().set(token,"blacklist",time,TimeUnit.MILLISECONDS);
+    }
+    public boolean isBlacklisted(String token){
+         return Boolean.TRUE.equals(redisTemplate.hasKey(token));
+    }
+
 }
