@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-service-route
+              uri: http://localhost:8090
+              predicates:
+                - Path=/api/user/**
+              filters:
+                - StripPrefix=2
+
+            - id: market-service-route
+              uri: http://localhost:8091
+              predicates:
+                - Path=/api/market/**
+              filters:
+                - StripPrefix=2
+
+            - id: order-service-route
+              uri: http://localhost:8093
+              predicates:
+                - Path=/api/order/**
+              filters:
+                - StripPrefix=2
+
+            - id: product-service-route
+              uri: http://localhost:8092
+              predicates:
+                - Path=/api/product/**
+              filters:
+                - StripPrefix=2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
